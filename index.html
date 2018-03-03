@@ -31,11 +31,28 @@
 
 				<!-- Main -->
 					<div id="main">
-						<article class="thumb">
-							<a href="https://vignette.wikia.nocookie.net/theamazingworldofgumball/images/e/ec/Reddit_Logo.png/revision/latest?cb=20170105232917" class="image"><img src="https://vignette.wikia.nocookie.net/theamazingworldofgumball/images/e/ec/Reddit_Logo.png/revision/latest?cb=20170105232917" alt="" /></a>
-							<h2>Coming soon!</h2>
-							<p>Coming soon!</p>
-						</article>
+							<article class="thumb">
+									<a href="https://vignette.wikia.nocookie.net/theamazingworldofgumball/images/e/ec/Reddit_Logo.png/revision/latest?cb=20170105232917" class="image"><img src="https://vignette.wikia.nocookie.net/theamazingworldofgumball/images/e/ec/Reddit_Logo.png/revision/latest?cb=20170105232917" alt="" /></a>
+									<h2>Coming soon!</h2>
+									<p>Coming soon!</p>
+		</article>
+						<script>
+							var xhr = new XMLHttpRequest();
+							xhr.open('GET', "https://www.reddit.com/r/pics/.json?limit=15", true);
+							xhr.send();
+							xhr.onreadystatechange = processRequest;
+
+							function processRequest(e) {
+								if (xhr.readyState == 4 && xhr.status == 200) {
+									var response = JSON.parse(xhr.responseText);
+									var el = document.getElementById('main');
+									for (var post in response.data.children) {
+										var panel = '<article class="thumb"><a href="' + response.data.children[post].data.url + '" class="image"><img src="' + response.data.children[post].data.url + '" alt="" /></a><h2>' + response.data.children[post].data.title + '</h2><p>' + response.data.children[post].data.title + '</p></article>';
+										el.insertAdjacentHTML('beforeend', panel);
+									}
+								}
+							}
+						</script>
 					</div>
 
 				<!-- Footer -->
